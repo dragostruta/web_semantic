@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model employee_model {
+  id          Int        @id
+  employee_id Int?
+  model_id    Int?
+  employees   employees? @relation(fields: [employee_id], references: [id], onDelete: Cascade, map: "fk_employee_model_employees")
+  models      models?    @relation(fields: [model_id], references: [id], onDelete: Cascade, map: "fk_employee_model_models")
+
+  @@index([employee_id], map: "fk_employee_model_employees")
+  @@index([model_id], map: "fk_employee_model_models")
+}
+
+model employees {
+  id             Int              @id
+  name           String?          @db.VarChar(100)
+  age            Int?
+  available      Boolean?
+  birthday       DateTime?        @db.Date
+  employee_model employee_model[]
+}
+
+model models {
+  id             Int              @id
+  name           String?          @db.VarChar(100)
+  quantity       Int?
+  employee_model employee_model[]
+}
