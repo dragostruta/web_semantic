@@ -11,6 +11,7 @@ model employee_model {
   id          Int        @id
   employee_id Int?
   model_id    Int?
+  quantity    Int?
   employees   employees? @relation(fields: [employee_id], references: [id], onDelete: Cascade, map: "fk_employee_model_employees")
   models      models?    @relation(fields: [model_id], references: [id], onDelete: Cascade, map: "fk_employee_model_models")
 
@@ -30,6 +31,5 @@ model employees {
 model models {
   id             Int              @id
   name           String?          @db.VarChar(100)
-  quantity       Int?
   employee_model employee_model[]
 }

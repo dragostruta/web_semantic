@@ -43,7 +43,7 @@ const GraphQlSubMenu = ({ employee, isActivatedRefetch }) => {
               >
                 {employeeModel.Model.name}
               </th>
-              <td className="px-6 py-4">{employeeModel.Model.quantity}</td>
+              <td className="px-6 py-4">{employeeModel.quantity}</td>
             </tr>
           );
         })}

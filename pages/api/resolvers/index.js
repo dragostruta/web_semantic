@@ -51,7 +51,6 @@ export const resolvers = {
         newModel = {
           id: db.models.length + 1,
           name: name_model,
-          quantity: quantity,
         };
         db.models.push(newModel);
       }
@@ -70,6 +69,7 @@ export const resolvers = {
         model_id: newModel.id,
         Employee: null,
         Model: null,
+        quantity: quantity,
       };
 
       db.employee_model.push(newEmployeeModel);

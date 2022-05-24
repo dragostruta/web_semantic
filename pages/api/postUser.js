@@ -7,13 +7,10 @@ export default async function handler(req, res) {
 
       const emplyees = await prisma.employees.findMany();
       const models = await prisma.models.findMany();
-      const employee_model = await prisma.employee_model.findMany();
+      const employee_models = await prisma.employee_model.findMany();
 
-      let employee = await prisma.employees.findFirst({
-        where: {
-          name,
-        },
-      });
+      let employee = emplyees.find((item) => item.name == name);
+
       if (!employee) {
         employee = await prisma.employees.create({
           data: {
@@ -25,35 +22,28 @@ export default async function handler(req, res) {
           },
         });
       }
-      let model = await prisma.models.findFirst({
-        where: {
-          name,
-        },
-      });
+      let model = models.find((item) => item.name == name_model);
 
       if (!model) {
         model = await prisma.models.create({
           data: {
             id: models.length + 1,
             name: name_model,
-            quantity: quantity,
           },
         });
       }
 
-      let model_employee = await prisma.employee_model.findFirst({
-        where: {
-          employee_id: emplyees.length,
-          model_id: models.length,
-        },
-      });
+      let model_employee = employee_models.find(
+        (item) => item.employee_id == employee.id && item.model_id == model.id
+      );
 
       if (!model_employee) {
         await prisma.employee_model.create({
           data: {
-            id: employee_model.length,
-            employee_id: emplyees.length,
-            model_id: models.length,
+            id: employee_models.length,
+            employee_id: employee.id,
+            model_id: model.id,
+            quantity: quantity,
           },
         });
       }

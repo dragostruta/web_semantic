@@ -12,6 +12,7 @@ const Home = () => {
   const [isActivatedRefetch, setIsActivatedRefetch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
+  const [form2, setForm2] = useState(false);
   const [addEmployee] = useMutation(addEmployeeModel);
   const [form, setForm] = useState({
     name: "",
@@ -96,6 +97,7 @@ const Home = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsActivatedRefetch(isActivatedRefetch ? false : true);
+      setForm2(true);
       setLoading(true);
       addEmployee({
         variables: {
@@ -112,7 +114,6 @@ const Home = () => {
 
   const handleSubmitMySql = (e) => {
     e.preventDefault();
-    setIsActivatedRefetch(isActivatedRefetch ? false : true);
     fetch("/api/postUser", {
       method: "POST",
       mode: "cors",
@@ -129,7 +130,9 @@ const Home = () => {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {});
+      .then((data) => {
+        setIsActivatedRefetch(isActivatedRefetch ? false : true);
+      });
   };
 
   return (
@@ -176,7 +179,7 @@ const Home = () => {
                 Send
               </button>
             </div>
-            <MySqlForm isActivatedRefetch={isActivatedRefetch} />
+            {form2 ? <MySqlForm isActivatedRefetch={isActivatedRefetch} /> : ""}
           </div>
         </form>
       </div>

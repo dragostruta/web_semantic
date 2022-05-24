@@ -1,18 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-
-export const allUsersQuery = gql`
-  query users {
-    getUsers {
-      id
-      name
-      age
-      posts {
-        id
-        title
-      }
-    }
-  }
-`;
+import { gql } from "@apollo/client";
 
 export const allEmployeesQuery = gql`
   query employees {
@@ -35,8 +21,8 @@ export const allEmployeeModelsQuery = gql`
       Model {
         id
         name
-        quantity
       }
+      quantity
     }
   }
 `;
@@ -61,6 +47,7 @@ export const addEmployeeModel = gql`
       id
       employee_id
       model_id
+      quantity
       Employee {
         id
         name
@@ -71,7 +58,6 @@ export const addEmployeeModel = gql`
       Model {
         id
         name
-        quantity
       }
     }
   }

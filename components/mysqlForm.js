@@ -107,7 +107,10 @@ const MySqlForm = ({ isActivatedRefetch }) => {
                     leaveTo="opacity-0 scale-95"
                   >
                     <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                      <MySqlSubMenu employee={currentEmployee} />
+                      <MySqlSubMenu
+                        isActivatedRefetch={isActivatedRefetch}
+                        employee={currentEmployee}
+                      />
                     </Dialog.Panel>
                   </Transition.Child>
                 </div>

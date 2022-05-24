@@ -1,12 +1,17 @@
 import useSWR from "swr";
+import { useEffect } from "react";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const MySqlSubMenu = ({ employee }) => {
+const MySqlSubMenu = ({ employee, isActivatedRefetch }) => {
   const { data, mutate, error } = useSWR(
     `/api/fetchEmployeeeModelByEmployeeId?employee_id=${employee.id}`,
     fetcher
   );
+
+  useEffect(() => {
+    mutate();
+  }, [isActivatedRefetch]);
 
   if (!data) return "Loading";
   if (error) return "error";
@@ -37,7 +42,7 @@ const MySqlSubMenu = ({ employee }) => {
               >
                 {employeeModel.Model.name}
               </th>
-              <td className="px-6 py-4">{employeeModel.Model.quantity}</td>
+              <td className="px-6 py-4">{employeeModel.quantity}</td>
             </tr>
           );
         })}

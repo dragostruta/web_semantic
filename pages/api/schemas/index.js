@@ -14,7 +14,6 @@ export const typeDefs = gql`
   type Model {
     id: ID
     name: String
-    quantity: Int
   }
 
   type EmployeeModel {
@@ -23,6 +22,7 @@ export const typeDefs = gql`
     model_id: ID!
     Employee: Employee
     Model: Model
+    quantity: Int
   }
 
   type Query {

@@ -3,27 +3,22 @@ module.exports = {
     {
       id: 1,
       name: "rochie",
-      quantity: 30,
     },
     {
       id: 2,
       name: "sacou",
-      quantity: 15,
     },
     {
       id: 3,
       name: "pullover",
-      quantity: 19,
     },
     {
       id: 4,
       name: "tricou",
-      quantity: 50,
     },
     {
       id: 5,
       name: "pantaloni",
-      quantity: 47,
     },
   ],
   employees: [
@@ -56,6 +51,7 @@ module.exports = {
       model_id: 1,
       Employee: null,
       Model: null,
+      quantity: 32,
     },
     {
       id: 2,
@@ -63,6 +59,7 @@ module.exports = {
       model_id: 2,
       Employee: null,
       Model: null,
+      quantity: 17,
     },
     {
       id: 3,
@@ -70,6 +67,7 @@ module.exports = {
       model_id: 3,
       Employee: null,
       Model: null,
+      quantity: 19,
     },
     {
       id: 4,
@@ -77,6 +75,7 @@ module.exports = {
       model_id: 4,
       Employee: null,
       Model: null,
+      quantity: 26,
     },
     {
       id: 4,
@@ -84,6 +83,7 @@ module.exports = {
       model_id: 5,
       Employee: null,
       Model: null,
+      quantity: 29,
     },
   ],
 };
