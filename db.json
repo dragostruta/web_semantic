@@ -1,25 +1,10 @@
 {
   "models": [
-    {
-      "id": 1,
-      "name": "rochie"
-    },
-    {
-      "id": 2,
-      "name": "sacou"
-    },
-    {
-      "id": 3,
-      "name": "pullover"
-    },
-    {
-      "id": 4,
-      "name": "tricou"
-    },
-    {
-      "id": 5,
-      "name": "pantaloni"
-    }
+    { "id": 1, "name": "rochie" },
+    { "id": 2, "name": "sacou" },
+    { "id": 3, "name": "pullover" },
+    { "id": 4, "name": "tricou" },
+    { "id": 5, "name": "pantaloni" }
   ],
   "employees": [
     {
@@ -27,21 +12,21 @@
       "name": "Truta Dragos Sebastian",
       "age": 25,
       "available": true,
-      "birthday": "1997-06-12"
+      "birthday": "1997-06-12T21:00:00.000Z"
     },
     {
       "id": 2,
       "name": "Neag Andrei Alexandru",
       "age": 34,
       "available": false,
-      "birthday": "1988-06-15"
+      "birthday": "1988-06-15T21:00:00.000Z"
     },
     {
       "id": 3,
       "name": "Pop Maria Simona",
       "age": 36,
       "available": true,
-      "birthday": "1986-08-20"
+      "birthday": "1986-08-20T21:00:00.000Z"
     }
   ],
   "employee_model": [

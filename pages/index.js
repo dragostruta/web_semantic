@@ -6,13 +6,17 @@ import { addEmployeeModel } from "../graphql/queries";
 import FormInputs from "../components/formInputs";
 import moment from "moment";
 import LoadingEffect from "../components/loadingEffect";
+import JsonForm from "../components/jsonForm";
 
 const Home = () => {
   const [fieldValidation, setFieldValidation] = useState(true);
   const [isActivatedRefetch, setIsActivatedRefetch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const [form2, setForm2] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
+  const [done2, setDone2] = useState(false);
+  const [done3, setDone3] = useState(false);
   const [addEmployee] = useMutation(addEmployeeModel);
   const [form, setForm] = useState({
     name: "",
@@ -35,14 +39,20 @@ const Home = () => {
     setTimeout(() => {
       setLoading(false);
       setDone(true);
+      setLoading2(false);
+      setDone2(true);
+      setLoading3(false);
+      setDone3(true);
     }, 500);
-  }, [loading]);
+  }, [loading, loading2, loading3]);
 
   useEffect(() => {
     setTimeout(() => {
       setDone(false);
+      setDone2(false);
+      setDone3(false);
     }, 500);
-  }, [done]);
+  }, [done, done2, done3]);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -97,7 +107,6 @@ const Home = () => {
     e.preventDefault();
     if (validateForm()) {
       setIsActivatedRefetch(isActivatedRefetch ? false : true);
-      setForm2(true);
       setLoading(true);
       addEmployee({
         variables: {
@@ -114,7 +123,32 @@ const Home = () => {
 
   const handleSubmitMySql = (e) => {
     e.preventDefault();
+    setLoading2(true);
     fetch("/api/postUser", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: form.name,
+        age: parseInt(form.age),
+        available: form.available,
+        birthday: moment(form.birthday),
+        name_model: form.name_model,
+        quantity: parseInt(form.quantity),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsActivatedRefetch(isActivatedRefetch ? false : true);
+      });
+  };
+
+  const handleSubmitJson = (e) => {
+    e.preventDefault();
+    setLoading3(true);
+    fetch("/api/postToJson", {
       method: "POST",
       mode: "cors",
       headers: {
@@ -168,7 +202,8 @@ const Home = () => {
               </button>
             </div>
             <GraphQlForm isActivatedRefetch={isActivatedRefetch} />
-            <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <div className="px-4 py-3 bg-gray-50 flex justify-end sm:px-6">
+              <LoadingEffect loading={loading2} done={done2} />
               <button
                 type="submit"
                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -179,7 +214,20 @@ const Home = () => {
                 Send
               </button>
             </div>
-            {form2 ? <MySqlForm isActivatedRefetch={isActivatedRefetch} /> : ""}
+            <MySqlForm isActivatedRefetch={isActivatedRefetch} />
+            <div className="px-4 py-3 bg-gray-50 flex justify-end sm:px-6">
+              <LoadingEffect loading={loading3} done={done3} />
+              <button
+                type="submit"
+                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                onClick={(e) => {
+                  handleSubmitJson(e);
+                }}
+              >
+                Send
+              </button>
+            </div>
+            <JsonForm isActivatedRefetch={isActivatedRefetch} />
           </div>
         </form>
       </div>
