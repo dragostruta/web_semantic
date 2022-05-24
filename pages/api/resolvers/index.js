@@ -1,6 +1,4 @@
-import axios from "axios";
 import db from "../../../db";
-const fs = require("fs").promises;
 
 export const resolvers = {
   Query: {

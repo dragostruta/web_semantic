@@ -1,10 +1,8 @@
-import { useQuery, useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useState, useEffect } from "react";
-import client from "../apollo-client";
 import GraphQlForm from "../components/graphqlForm";
 import MySqlForm from "../components/mysqlForm";
 import { addEmployeeModel } from "../graphql/queries";
-import { Switch, Transition } from "@headlessui/react";
 import FormInputs from "../components/formInputs";
 import moment from "moment";
 import LoadingEffect from "../components/loadingEffect";
@@ -113,6 +111,8 @@ const Home = () => {
   };
 
   const handleSubmitMySql = (e) => {
+    e.preventDefault();
+    setIsActivatedRefetch(isActivatedRefetch ? false : true);
     fetch("/api/postUser", {
       method: "POST",
       mode: "cors",
@@ -120,9 +120,12 @@ const Home = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: form.title,
         name: form.name,
-        age: form.age,
+        age: parseInt(form.age),
+        available: form.available,
+        birthday: moment(form.birthday),
+        name_model: form.name_model,
+        quantity: parseInt(form.quantity),
       }),
     })
       .then((response) => response.json())
@@ -173,7 +176,7 @@ const Home = () => {
                 Send
               </button>
             </div>
-            <MySqlForm />
+            <MySqlForm isActivatedRefetch={isActivatedRefetch} />
           </div>
         </form>
       </div>

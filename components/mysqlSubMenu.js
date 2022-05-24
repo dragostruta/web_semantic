@@ -1,20 +1,14 @@
-import { useQuery } from "@apollo/client";
-import { allEmployeeModelsQuery } from "../graphql/queries";
-import { useEffect } from "react";
+import useSWR from "swr";
 
-const GraphQlSubMenu = ({ employee, isActivatedRefetch }) => {
-  const { data, error, loading, refetch } = useQuery(allEmployeeModelsQuery, {
-    variables: {
-      employeeId: employee.id,
-    },
-  });
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  useEffect(() => {
-    refetch();
-  }, [isActivatedRefetch]);
+const MySqlSubMenu = ({ employee }) => {
+  const { data, mutate, error } = useSWR(
+    `/api/fetchEmployeeeModelByEmployeeId?employee_id=${employee.id}`,
+    fetcher
+  );
 
-  if (loading) return "Loading";
-
+  if (!data) return "Loading";
   if (error) return "error";
 
   return (
@@ -33,10 +27,10 @@ const GraphQlSubMenu = ({ employee, isActivatedRefetch }) => {
         </tr>
       </thead>
       <tbody>
-        {data.getEmployeeModelsByEmployeeId.map((employeeModel) => {
+        {data.map((employeeModel) => {
           return (
             <tr className="bg-white border-b" key={employeeModel.id}>
-              <td className="px-6 py-4">{employeeModel.Model.id}</td>
+              <td className="px-6 py-4">{employeeModel.id}</td>
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900  whitespace-nowrap"
@@ -52,4 +46,4 @@ const GraphQlSubMenu = ({ employee, isActivatedRefetch }) => {
   );
 };
 
-export default GraphQlSubMenu;
+export default MySqlSubMenu;
