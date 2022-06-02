@@ -12,6 +12,8 @@ const Home = () => {
   const [fieldValidation, setFieldValidation] = useState(true);
   const [isActivatedRefetch, setIsActivatedRefetch] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [final2, setFinal2] = useState(false);
+  const [final3, setFinal3] = useState(false);
   const [done, setDone] = useState(false);
   const [loading2, setLoading2] = useState(false);
   const [loading3, setLoading3] = useState(false);
@@ -123,50 +125,56 @@ const Home = () => {
 
   const handleSubmitMySql = (e) => {
     e.preventDefault();
-    setLoading2(true);
-    fetch("/api/postUser", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.name,
-        age: parseInt(form.age),
-        available: form.available,
-        birthday: moment(form.birthday),
-        name_model: form.name_model,
-        quantity: parseInt(form.quantity),
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsActivatedRefetch(isActivatedRefetch ? false : true);
-      });
+    if (validateForm()) {
+      setLoading2(true);
+      setFinal2(true);
+      fetch("/api/postUser", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          age: parseInt(form.age),
+          available: form.available,
+          birthday: moment(form.birthday),
+          name_model: form.name_model,
+          quantity: parseInt(form.quantity),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setIsActivatedRefetch(isActivatedRefetch ? false : true);
+        });
+    }
   };
 
   const handleSubmitJson = (e) => {
     e.preventDefault();
-    setLoading3(true);
-    fetch("/api/postToJson", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: form.name,
-        age: parseInt(form.age),
-        available: form.available,
-        birthday: moment(form.birthday),
-        name_model: form.name_model,
-        quantity: parseInt(form.quantity),
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsActivatedRefetch(isActivatedRefetch ? false : true);
-      });
+    if (validateForm()) {
+      setLoading3(true);
+      setFinal3(true);
+      fetch("/api/postToJson", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          age: parseInt(form.age),
+          available: form.available,
+          birthday: moment(form.birthday),
+          name_model: form.name_model,
+          quantity: parseInt(form.quantity),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setIsActivatedRefetch(isActivatedRefetch ? false : true);
+        });
+    }
   };
 
   return (
@@ -214,7 +222,12 @@ const Home = () => {
                 Send
               </button>
             </div>
-            <MySqlForm isActivatedRefetch={isActivatedRefetch} />
+            {final2 ? (
+              <MySqlForm isActivatedRefetch={isActivatedRefetch} />
+            ) : (
+              ""
+            )}
+            {/* <MySqlForm isActivatedRefetch={isActivatedRefetch} /> */}
             <div className="px-4 py-3 bg-gray-50 flex justify-end sm:px-6">
               <LoadingEffect loading={loading3} done={done3} />
               <button
@@ -227,7 +240,8 @@ const Home = () => {
                 Send
               </button>
             </div>
-            <JsonForm isActivatedRefetch={isActivatedRefetch} />
+            {final3 ? <JsonForm isActivatedRefetch={isActivatedRefetch} /> : ""}
+            {/* <JsonForm isActivatedRefetch={isActivatedRefetch} /> */}
           </div>
         </form>
       </div>

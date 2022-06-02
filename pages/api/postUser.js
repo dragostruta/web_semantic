@@ -14,7 +14,6 @@ export default async function handler(req, res) {
       if (!employee) {
         employee = await prisma.employees.create({
           data: {
-            id: emplyees.length + 1,
             name,
             age,
             available,
@@ -22,12 +21,12 @@ export default async function handler(req, res) {
           },
         });
       }
+
       let model = models.find((item) => item.name == name_model);
 
       if (!model) {
         model = await prisma.models.create({
           data: {
-            id: models.length + 1,
             name: name_model,
           },
         });
@@ -40,7 +39,6 @@ export default async function handler(req, res) {
       if (!model_employee) {
         await prisma.employee_model.create({
           data: {
-            id: employee_models.length,
             employee_id: employee.id,
             model_id: model.id,
             quantity: quantity,

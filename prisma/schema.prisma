@@ -8,19 +8,19 @@ datasource db {
 }
 
 model employee_model {
-  id          Int        @id
+  id          Int        @id @default(autoincrement())
   employee_id Int?
   model_id    Int?
   quantity    Int?
-  employees   employees? @relation(fields: [employee_id], references: [id], onDelete: Cascade, map: "fk_employee_model_employees")
-  models      models?    @relation(fields: [model_id], references: [id], onDelete: Cascade, map: "fk_employee_model_models")
+  employees   employees? @relation(fields: [employee_id], references: [id])
+  models      models?    @relation(fields: [model_id], references: [id])
 
   @@index([employee_id], map: "fk_employee_model_employees")
   @@index([model_id], map: "fk_employee_model_models")
 }
 
 model employees {
-  id             Int              @id
+  id             Int              @id @default(autoincrement())
   name           String?          @db.VarChar(100)
   age            Int?
   available      Boolean?
@@ -29,7 +29,7 @@ model employees {
 }
 
 model models {
-  id             Int              @id
+  id             Int              @id  @default(autoincrement())
   name           String?          @db.VarChar(100)
   employee_model employee_model[]
 }
